@@ -8,6 +8,7 @@ import { FullScreen } from "@openuidev/react-ui";
 import { openuiLibrary, openuiPromptOptions } from "@openuidev/react-ui/genui-lib";
 import RadiusView from "@/components/RadiusView";
 import { OnboardingDialog } from "@/components/OnboardingDialog";
+import { DisclaimerDialog } from "@/components/DisclaimerDialog";
 import { MagnifyingGlassIcon, ChatBubbleIcon, Cross2Icon, PlusCircledIcon, UpdateIcon, EyeNoneIcon, ExclamationTriangleIcon } from "@radix-ui/react-icons";
 import { clsx, type ClassValue } from 'clsx';
 import { twMerge } from 'tailwind-merge';
