@@ -40,13 +40,21 @@ export const FilterSidebar = ({
 }: FilterSidebarProps) => {
   const [localSearch, setLocalSearch] = useState(searchQuery);
 
+  // Sync localSearch when searchQuery prop changes (e.g. from header)
+  useEffect(() => {
+    setLocalSearch(searchQuery);
+  }, [searchQuery]);
+
   // Debounce search
   useEffect(() => {
     const timer = setTimeout(() => {
-      setSearchQuery(localSearch);
+      // Only update if different to avoid redundant re-renders
+      if (localSearch !== searchQuery) {
+        setSearchQuery(localSearch);
+      }
     }, 300);
     return () => clearTimeout(timer);
-  }, [localSearch, setSearchQuery]);
+  }, [localSearch, searchQuery, setSearchQuery]);
 
   const allSources = Array.from(new Set(items.map(i => i.source)));
   

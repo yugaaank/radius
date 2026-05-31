@@ -72,6 +72,8 @@ const RadiusViewInner = ({
     return () => window.removeEventListener('keydown', handleEsc);
   }, []);
 
+  const [hasInitializedSources, setHasInitializedSources] = useState(false);
+
   const fetchData = useCallback(async (refresh = false) => {
     if (forceDemo && !isDemoMode) {
         setIsDemoMode(true);
@@ -100,13 +102,18 @@ const RadiusViewInner = ({
       setItems(newItems);
       
       const sources = Array.from(new Set(newItems.map((i: RadiusItem) => i.source))) as string[];
-      if (selectedSources.length === 0 || refresh) setSelectedSources(sources);
+      
+      // Initialize sources only on first load or explicit refresh
+      if (!hasInitializedSources || refresh) {
+          setSelectedSources(sources);
+          setHasInitializedSources(true);
+      }
     } catch (error: any) {
       console.error('Error fetching radius data:', error);
     } finally {
       setLoading(false);
     }
-  }, [isDemoMode, forceDemo, selectedSources.length]);
+  }, [isDemoMode, forceDemo, hasInitializedSources, setLoading, setSourceStatus, setIsDemoMode]);
 
   const handleItemAction = async (itemId: string, action: string) => {
     try {
