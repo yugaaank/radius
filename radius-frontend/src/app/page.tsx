@@ -27,6 +27,7 @@ export default function Home() {
   const [loading, setLoading] = useState(true);
   const [refreshTrigger, setRefreshTrigger] = useState(0);
   const [sourceStatus, setSourceStatus] = useState<Record<string, SourceStatus>>({});
+  const [searchQuery, setSearchQuery] = useState('');
 
   return (
     <main className="relative h-screen w-screen overflow-hidden bg-neutral-50 font-sans">
@@ -62,60 +63,25 @@ export default function Home() {
         </div>
 
         <div className="flex items-center gap-2 md:gap-4">
-          {/* Live/Demo Toggle Capsule */}
-          <div className="bg-white/85 backdrop-blur-xl border border-neutral-200/50 p-1 rounded-full shadow-sm flex items-center gap-1">
-            <div className="flex bg-neutral-100/80 p-0.5 rounded-full">
-              <button 
-                disabled={forceDemo}
-                onClick={() => setIsDemoMode(false)} 
-                className={cn(
-                  "px-3.5 py-1 rounded-full text-[9px] font-black uppercase tracking-widest transition-all duration-300",
-                  !isDemoMode ? "bg-white text-neutral-800 shadow-[0_1px_3px_rgba(0,0,0,0.1)]" : "text-neutral-400 hover:text-neutral-700 disabled:opacity-50"
-                )}
-              >
-                Live
-              </button>
-              <button 
-                onClick={() => setIsDemoMode(true)} 
-                className={cn(
-                  "px-3.5 py-1 rounded-full text-[9px] font-black uppercase tracking-widest transition-all duration-300",
-                  isDemoMode ? "bg-white text-neutral-800 shadow-[0_1px_3px_rgba(0,0,0,0.1)]" : "text-neutral-400 hover:text-neutral-700"
-                )}
-              >
-                Demo
-              </button>
-            </div>
-            
-            <div className="h-3 w-px bg-neutral-200 mx-0.5" />
-
-            {!isDemoMode && (
-              <button 
+          <div className="hidden lg:relative lg:block">
+            <MagnifyingGlassIcon className="absolute left-3.5 top-1/2 -translate-y-1/2 text-neutral-400" width={16} height={16} />
+            <input 
+              type="text" 
+              placeholder="Spotlight search..." 
+              value={searchQuery}
+              onChange={(e) => setSearchQuery(e.target.value)}
+              className="pl-10 pr-4 py-2.5 bg-neutral-100 hover:bg-neutral-200/40 focus:bg-white text-sm border-0 rounded-xl focus:outline-none focus:ring-1 focus:ring-neutral-400 w-72 focus:w-80 transition-all placeholder-neutral-400 text-neutral-800"
+            />
+          </div>
+          
+          <div className="flex items-center gap-2 bg-white/85 backdrop-blur-xl border border-neutral-200/50 p-1 rounded-full shadow-sm ml-2">
+             <button 
                 onClick={() => setRefreshTrigger(prev => prev + 1)}
                 className="p-1.5 hover:bg-neutral-100 rounded-full transition-all text-neutral-400 hover:text-neutral-800 group"
                 title="Force Refresh Live Data"
               >
                 <UpdateIcon width={12} height={12} className={cn("transition-transform duration-700", loading && "animate-spin")} />
               </button>
-            )}
-
-            <button 
-              onClick={() => setForceDemo(!forceDemo)}
-              className={cn(
-                "p-1.5 rounded-full transition-all",
-                forceDemo ? "bg-rose-50 text-rose-600 border border-rose-200" : "text-neutral-400 hover:text-neutral-800 hover:bg-neutral-100"
-              )}
-              title={forceDemo ? "Disable Force Demo" : "Enable Force Demo (Presentation Safeguard)"}
-            >
-              <EyeNoneIcon width={12} height={12} />
-            </button>
-          </div>
-          <div className="hidden lg:relative lg:block">
-            <MagnifyingGlassIcon className="absolute left-3.5 top-1/2 -translate-y-1/2 text-neutral-400" width={16} height={16} />
-            <input 
-              type="text" 
-              placeholder="Spotlight search..." 
-              className="pl-10 pr-4 py-2.5 bg-neutral-100 hover:bg-neutral-200/40 focus:bg-white text-sm border-0 rounded-xl focus:outline-none focus:ring-1 focus:ring-neutral-400 w-72 focus:w-80 transition-all placeholder-neutral-400 text-neutral-800"
-            />
           </div>
           
           {process.env.NEXT_PUBLIC_HIDE_ADD_SOURCE !== 'true' && (
@@ -143,6 +109,8 @@ export default function Home() {
           refreshTrigger={refreshTrigger}
           sourceStatus={sourceStatus}
           setSourceStatus={setSourceStatus}
+          searchQuery={searchQuery}
+          setSearchQuery={setSearchQuery}
         />
       </div>
 

@@ -29,6 +29,8 @@ interface RadiusViewInnerProps {
   refreshTrigger: number;
   sourceStatus: Record<string, SourceStatus>;
   setSourceStatus: (val: Record<string, SourceStatus>) => void;
+  searchQuery: string;
+  setSearchQuery: (val: string) => void;
 }
 
 const RadiusViewInner = ({ 
@@ -41,7 +43,9 @@ const RadiusViewInner = ({
   setLoading,
   refreshTrigger,
   sourceStatus,
-  setSourceStatus
+  setSourceStatus,
+  searchQuery,
+  setSearchQuery
 }: RadiusViewInnerProps) => {
   const [items, setItems] = useState<RadiusItem[]>([]);
   const [selectedItem, setSelectedItem] = useState<RadiusItem | null>(null);
@@ -50,7 +54,6 @@ const RadiusViewInner = ({
   const [selectedSources, setSelectedSources] = useState<string[]>([]);
   const [selectedSeverities, setSelectedSeverities] = useState<string[]>(['low', 'medium', 'high', 'critical']);
   const [selectedCategories, setSelectedCategories] = useState<string[]>(CANONICAL_CATEGORIES);
-  const [searchQuery, setSearchQuery] = useState('');
   const [isFilterOpen, setIsFilterOpen] = useState(false);
   const [showOnboardingToast, setShowOnboardingToast] = useState(false);
 
