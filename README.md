@@ -1,15 +1,15 @@
-# Radar: Technical Intelligence Manual
+# Radius: Technical Intelligence Manual
 
-Radar is a local-first engineering command center that transforms raw API data into **Decision Relevance**. It leverages the **Coral CLI** to treat disparate services as a unified SQL database.
+Radius is a local-first engineering command center that transforms raw API data into **Decision Relevance**. It leverages the **Coral CLI** to treat disparate services as a unified SQL database.
 
 ---
 
 ## 1. System Architecture
 
-Radar consists of three primary layers:
+Radius consists of three primary layers:
 1.  **Data Layer (Coral):** Manages local authentication and translates API endpoints (REST/gRPC) into relational SQL tables.
-2.  **Intelligence Layer (radar-backend):** A Bun/Node.js service that executes "Decision Queries" against Coral. It calculates urgency, impact, and health scores.
-3.  **Visualization Layer (radar-frontend):** A Next.js interactive canvas that maps items to a multi-dimensional radar using a "Google Maps" zoom/pan interface.
+2.  **Intelligence Layer (radius-backend):** A Bun/Node.js service that executes "Decision Queries" against Coral. It calculates urgency, impact, and health scores.
+3.  **Visualization Layer (radius-frontend):** A Next.js interactive canvas that maps items to a multi-dimensional radius using a "Google Maps" zoom/pan interface.
 
 ---
 
@@ -63,7 +63,7 @@ Each service is queried using standard SQL via the `coral sql` interface. Below 
 
 ## 3. The Urgency Algorithm
 
-Radar does not use a simple timeline. It uses a **Decision Score**:
+Radius does not use a simple timeline. It uses a **Decision Score**:
 
 ```typescript
 function calculateDistance(dueDate, impact, isBlocked) {
@@ -79,7 +79,7 @@ function calculateDistance(dueDate, impact, isBlocked) {
 ## 4. Setup & Onboarding
 
 ### API Connectivity
-All tokens are managed locally via the Radar UI, which executes:
+All tokens are managed locally via the Radius UI, which executes:
 `coral source add <name> --[SECRET_KEY]=[TOKEN]`
 
 ### Required Scopes

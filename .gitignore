@@ -1,11 +1,11 @@
 # Dependency directories
 node_modules/
-radar-backend/node_modules/
-radar-frontend/node_modules/
+radius-backend/node_modules/
+radius-frontend/node_modules/
 
 # Next.js build output
-radar-frontend/.next/
-radar-frontend/out/
+radius-frontend/.next/
+radius-frontend/out/
 
 # Env files
 .env
@@ -13,8 +13,8 @@ radar-frontend/out/
 .env.development.local
 .env.test.local
 .env.production.local
-radar-backend/.env
-radar-frontend/.env
+radius-backend/.env
+radius-frontend/.env
 
 # Bun
 bun.lockb

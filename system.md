@@ -47,7 +47,7 @@ AI additions:
 Enterprise/team features:
 
 * RBAC
-* team radar
+* team radius
 * workload heatmaps
 * escalation dashboard
 * dependency graph

@@ -1,6 +1,6 @@
-# Radar SQL Library
+# Radius SQL Library
 
-This library contains the core intelligence queries used by Radar to generate insights across data sources.
+This library contains the core intelligence queries used by Radius to generate insights across data sources.
 
 ## GitHub Intelligence
 
