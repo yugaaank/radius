@@ -5,7 +5,7 @@ import { sanitizeRaw } from '../core/sanitize';
 
 const router = Router();
 
-const DEMO_DATA: RadiusItem[] = [
+export const DEMO_DATA: RadiusItem[] = [
   // --- PROJECT: AUTH SERVICE REFACTOR (ENG-142) ---
   {
     id: 'demo-gh-1',

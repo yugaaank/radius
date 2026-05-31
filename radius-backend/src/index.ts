@@ -3,7 +3,7 @@ import cors from 'cors';
 import workspaceRouter from './routes/workspace';
 import sourcesRouter from './routes/sources';
 import cacheRouter from './routes/cache';
-import demoRouter from './routes/demo';
+import demoRouter, { DEMO_DATA } from './routes/demo';
 
 const app = express();
 const port = process.env.PORT || 3001;
@@ -12,7 +12,7 @@ const FRONTEND_ORIGIN = process.env.FRONTEND_ORIGIN || 'http://localhost:3000';
 const FORCE_DEMO = process.env.FORCE_DEMO === 'true';
 
 app.use(cors({
-  origin: [FRONTEND_ORIGIN, 'http://localhost:3000', 'http://localhost:3001'],
+  origin: [FRONTEND_ORIGIN, 'http://localhost:3000', 'http://localhost:3001', 'https://r4dius.vercel.app'],
   methods: ['GET', 'POST'],
   credentials: true
 }));
@@ -21,7 +21,10 @@ app.use(express.json());
 // Middleware to inject FORCE_DEMO into requests if needed
 app.use((req, res, next) => {
   if (FORCE_DEMO && req.path.includes('workspace-radius')) {
-    return res.redirect('/api/demo-radius');
+    return res.json({
+        items: DEMO_DATA,
+        sourceStatus: { demo: { status: 'ok', latencyMs: 0 } }
+    });
   }
   next();
 });

@@ -86,12 +86,12 @@ const RadiusViewInner = ({
       
       let newItems: RadiusItem[] = [];
       if (isDemoMode) {
-          newItems = response.data;
+          newItems = Array.isArray(response.data) ? response.data : (response.data?.items || []);
           setSourceStatus({ demo: { status: 'ok', latencyMs: 0 } });
       } else {
           const data = response.data as WorkspaceResponse;
-          newItems = data.items;
-          setSourceStatus(data.sourceStatus);
+          newItems = data?.items || [];
+          setSourceStatus(data?.sourceStatus || {});
       }
       
       setItems(newItems);
