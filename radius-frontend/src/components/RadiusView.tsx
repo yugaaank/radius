@@ -77,9 +77,10 @@ const RadiusViewInner = ({
 
     setLoading(true);
     try {
+      const baseUrl = process.env.NEXT_PUBLIC_API_URL || 'http://localhost:3001';
       const endpoint = isDemoMode 
-        ? 'http://localhost:3001/api/demo-radius' 
-        : `http://localhost:3001/api/workspace-radius${refresh ? '?refresh=true' : ''}`;
+        ? `${baseUrl}/api/demo-radius` 
+        : `${baseUrl}/api/workspace-radius${refresh ? '?refresh=true' : ''}`;
       
       const response = await axios.get(endpoint);
       
@@ -99,7 +100,6 @@ const RadiusViewInner = ({
       if (selectedSources.length === 0 || refresh) setSelectedSources(sources);
     } catch (error: any) {
       console.error('Error fetching radius data:', error);
-      // If live fails, and not in forceDemo, we could show error but let's just log
     } finally {
       setLoading(false);
     }
@@ -107,7 +107,8 @@ const RadiusViewInner = ({
 
   const handleItemAction = async (itemId: string, action: string) => {
     try {
-      await axios.post(`http://localhost:3001/api/items/${itemId}/action`, { action });
+      const baseUrl = process.env.NEXT_PUBLIC_API_URL || 'http://localhost:3001';
+      await axios.post(`${baseUrl}/api/items/${itemId}/action`, { action });
       
       if (['resolve_task', 'merge_pr', 'resolve_incident'].includes(action)) {
         setItems(prev => prev.filter(i => i.id !== itemId));

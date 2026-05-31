@@ -74,7 +74,7 @@ async function runCoralCommand(args: string[], inputs?: Record<string, string>):
   try {
     const { stdout, stderr } = await execFilePromise('coral', args, {
       timeout: COMMAND_TIMEOUT,
-      env: { ...process.env, ...env } // Merging with existing process.env but overriding with sanitized inputs
+      env: { ...process.env, ...env } 
     });
     
     const duration = Math.round(performance.now() - start);
@@ -82,6 +82,10 @@ async function runCoralCommand(args: string[], inputs?: Record<string, string>):
   } catch (error: any) {
     const duration = Math.round(performance.now() - start);
     
+    if (error.code === 'ENOENT') {
+        throw new Error("Coral CLI not found. Please install it to use 'Live' mode, or switch to 'Demo' mode.");
+    }
+
     if (error.code === 'ETIMEDOUT') {
       console.error(`[coral] timeout after ${duration}ms: coral ${args.join(' ')}`);
       throw {
