@@ -9,7 +9,6 @@ import { openuiLibrary, openuiPromptOptions } from "@openuidev/react-ui/genui-li
 import RadiusView from "@/components/RadiusView";
 import { OnboardingDialog } from "@/components/OnboardingDialog";
 import { MagnifyingGlassIcon, ChatBubbleIcon, Cross2Icon, PlusCircledIcon, UpdateIcon, EyeNoneIcon, ExclamationTriangleIcon } from "@radix-ui/react-icons";
-import { buildAIContext } from "@/utils/ai";
 import { clsx, type ClassValue } from 'clsx';
 import { twMerge } from 'tailwind-merge';
 import { SourceStatus } from "@/components/radius-types";
