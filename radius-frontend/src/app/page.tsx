@@ -21,7 +21,6 @@ function cn(...inputs: ClassValue[]) {
 const systemPrompt = openuiLibrary.prompt(openuiPromptOptions);
 
 export default function Home() {
-  const [isChatOpen, setIsChatOpen] = useState(false);
   const [isOnboardingOpen, setIsOnboardingOpen] = useState(false);
   const [visibleItems, setVisibleItems] = useState<any[]>([]);
   const [isDemoMode, setIsDemoMode] = useState(false);
@@ -127,13 +126,6 @@ export default function Home() {
             <PlusCircledIcon width={16} height={16} className="text-neutral-500" />
             <span className="hidden sm:inline">Add Source</span>
           </button>
-
-          <button 
-            onClick={() => setIsChatOpen(!isChatOpen)}
-            className="p-3 bg-neutral-900 text-white rounded-xl hover:bg-neutral-800 transition-colors shadow-md relative"
-          >
-            {isChatOpen ? <Cross2Icon width={18} height={18} /> : <ChatBubbleIcon width={18} height={18} />}
-          </button>
         </div>
       </header>
  
@@ -157,64 +149,6 @@ export default function Home() {
         isOpen={isOnboardingOpen} 
         onClose={() => setIsOnboardingOpen(false)} 
       />
-
-      {/* Floating Chat / AI Agent Panel */}
-      {isChatOpen && (
-        <div className="absolute right-8 bottom-8 w-[480px] h-[700px] z-40 shadow-2xl rounded-3xl border border-neutral-200/60 overflow-hidden bg-white/90 backdrop-blur-2xl flex flex-col transition-all duration-300">
-          <div className="p-6 bg-neutral-50/60 border-b border-neutral-200/40 flex justify-between items-center shrink-0">
-            <div className="flex items-center gap-2.5">
-              <div className="p-2 bg-neutral-900 rounded-xl text-white">
-                <ChatBubbleIcon width={16} height={16} />
-              </div>
-              <span className="font-bold text-sm text-neutral-800">Radius Assistant</span>
-            </div>
-            <span className="px-3 py-1 bg-neutral-100 text-neutral-600 text-[11px] rounded-full font-bold uppercase tracking-wider border border-neutral-200/30">Active</span>
-          </div>
-
-          {/* Quick Action Chips */}
-          <div className="p-3 bg-white/40 border-b border-neutral-200/20 flex gap-2 overflow-x-auto no-scrollbar shrink-0">
-            {[
-              "What's blocking release?",
-              "Show critical risks",
-              "What should I do next?",
-              "Explain correlations"
-            ].map(p => (
-              <button
-                key={p}
-                onClick={() => {
-                  const input = document.querySelector('textarea');
-                  if (input) {
-                    (input as HTMLTextAreaElement).value = p;
-                    input.dispatchEvent(new Event('input', { bubbles: true }));
-                  }
-                }}
-                className="whitespace-nowrap px-4 py-1.5 bg-neutral-100 hover:bg-neutral-200/80 border border-neutral-200/20 rounded-full text-[11px] font-bold text-neutral-600 transition-all active:scale-[0.98]"
-              >
-                {p}
-              </button>
-            ))}
-          </div>
-
-          <div className="flex-1 overflow-hidden">
-            <FullScreen
-              processMessage={async ({ messages, abortController }) => {
-                return fetch("/api/chat", {
-                  method: "POST",
-                  headers: { "Content-Type": "application/json" },
-                  body: JSON.stringify({
-                    messages: openAIMessageFormat.toApi(messages),
-                    radiusContext: buildAIContext(visibleItems)
-                  }),
-                  signal: abortController.signal,
-                });
-              }}
-              streamProtocol={openAIReadableStreamAdapter()}
-              componentLibrary={openuiLibrary}
-              agentName="Radius Bot"
-            />
-          </div>
-        </div>
-      )}
 
       {/* Legend */}
       <div className="absolute left-8 bottom-8 z-30 p-6 bg-white/70 backdrop-blur-xl border border-neutral-200/40 rounded-2xl shadow-xl text-xs space-y-3.5 max-w-[280px]">
