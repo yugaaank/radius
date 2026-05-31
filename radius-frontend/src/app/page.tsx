@@ -118,13 +118,15 @@ export default function Home() {
             />
           </div>
           
-          <button 
-            onClick={() => setIsOnboardingOpen(true)}
-            className="flex items-center gap-2 px-3 py-2.5 md:px-4.5 bg-neutral-100 hover:bg-neutral-200/60 rounded-xl text-sm font-semibold text-neutral-700 transition-colors shadow-[0_1px_2px_rgba(0,0,0,0.04)]"
-          >
-            <PlusCircledIcon width={16} height={16} className="text-neutral-500" />
-            <span className="hidden sm:inline">Add Source</span>
-          </button>
+          {process.env.NEXT_PUBLIC_HIDE_ADD_SOURCE !== 'true' && (
+            <button 
+              onClick={() => setIsOnboardingOpen(true)}
+              className="flex items-center gap-2 px-3 py-2.5 md:px-4.5 bg-neutral-100 hover:bg-neutral-200/60 rounded-xl text-sm font-semibold text-neutral-700 transition-colors shadow-[0_1px_2px_rgba(0,0,0,0.04)]"
+            >
+              <PlusCircledIcon width={16} height={16} className="text-neutral-500" />
+              <span className="hidden sm:inline">Add Source</span>
+            </button>
+          )}
         </div>
       </header>
  
